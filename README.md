@@ -11,7 +11,9 @@ Then all you need to do is flash "hellocubiclite.yaml" to your device via ESPHom
 To flash you'll need a UART to USB adapter
 
 Wiring:
-From top to bottom. On the left is HelloCubic, on the right UART adapter
+
+From top to bottom. On the left is HelloCubic, on the right UART adapter.
+
 Square Pad   GND    -   GND
 
 Second Pad   TXD0   -   RXD
