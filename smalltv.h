@@ -113,7 +113,7 @@ class SmallTVDisplay : public display::DisplayBuffer {
   void draw_absolute_pixel_internal(int x, int y, Color color) override {
     if (x < 0 || x >= TFT_WIDTH || y < 0 || y >= TFT_HEIGHT) return;
     if (band_buf_ == nullptr) return;
-    y = (TFT_HEIGHT - 1) - y;  // flip vertically
+    x = (TFT_WIDTH - 1) - x;
     int local_y = y - band_start_;
     if (local_y < 0 || local_y >= BAND_HEIGHT) return;
     uint16_t c = ((color.r >> 3) << 11) | ((color.g >> 2) << 5) | (color.b >> 3);
