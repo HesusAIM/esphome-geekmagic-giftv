@@ -1,0 +1,112 @@
+esphome:
+  name: "hellocubiclite"
+  friendly_name: HelloCubicLite
+  libraries:
+    - "SPI"
+      
+esp8266:
+  board: esp12e
+  framework:
+    version: recommended
+
+logger:
+
+api:
+
+ota:
+  - platform: esphome
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  ap:
+    ssid: "Smalltv Fallback Hotspot"
+    password: "iMy5zoja63Br"
+
+captive_portal:
+
+external_components:
+  - source:
+      type: local
+      path: components
+    components: [smalltv]
+
+text_sensor:
+  - platform: homeassistant
+    id: ups_status
+    entity_id: sensor.eaton_ellipse_pro_status
+  - platform: homeassistant
+    id: ups_battery
+    entity_id: sensor.eaton_ellipse_pro_battery_charge
+  - platform: homeassistant
+    id: ups_power
+    entity_id: sensor.eaton_ellipse_pro_real_power
+  - platform: homeassistant
+    id: ups_load
+    entity_id: sensor.eaton_ellipse_pro_load
+  - platform: homeassistant
+    id: ups_voltage
+    entity_id: sensor.eaton_ellipse_pro_output_voltage
+  - platform: homeassistant
+    id: ups_runtime
+    entity_id: sensor.eaton_ellipse_pro_battery_runtime_minutes
+    
+font:
+  - file: "gfonts://Roboto"
+    id: font_tiny
+    size: 14
+  - file: "gfonts://Roboto"
+    id: font_small
+    size: 18
+  - file: "gfonts://Roboto"
+    id: font_medium
+    size: 22
+  - file: "gfonts://Roboto"
+    id: font_large
+    size: 42
+
+time:
+  - platform: homeassistant
+    id: ha_time
+
+display:
+  - platform: smalltv
+    id: my_display
+    update_interval: 5s
+    lambda: |-
+      it.fill(Color(0, 0, 0));
+
+      // Header: status
+      it.filled_rectangle(0, 0, 240, 30, Color(0, 80, 120));
+      std::string status = id(ups_status).has_state() ? id(ups_status).state : "Unknown";
+      it.print(10, 5, id(font_small), Color(255, 255, 255), ("UPS: " + status).c_str());
+
+      // Big power reading
+      it.print(10, 38, id(font_tiny), Color(150, 150, 150), "Power");
+      if (id(ups_power).has_state()) {
+        it.print(10, 55, id(font_large), Color(255, 255, 0), (id(ups_power).state + " W").c_str());
+      } else {
+        it.print(10, 55, id(font_large), Color(100, 100, 100), "--");
+      }
+
+      it.line(0, 115, 240, 115, Color(40, 40, 40));
+
+      // Row: Load % and Voltage
+      it.print(5, 120, id(font_tiny), Color(150, 150, 150), "Load");
+      it.print(5, 136, id(font_medium), Color(255, 180, 0),
+        (id(ups_load).has_state() ? id(ups_load).state + "%" : "--").c_str());
+
+      it.print(125, 120, id(font_tiny), Color(150, 150, 150), "Voltage");
+      it.print(125, 136, id(font_medium), Color(100, 220, 255),
+        (id(ups_voltage).has_state() ? id(ups_voltage).state + " V" : "--").c_str());
+
+      it.line(0, 170, 240, 170, Color(40, 40, 40));
+
+      // Row: Battery and Runtime
+      it.print(5, 175, id(font_tiny), Color(150, 150, 150), "Battery");
+      it.print(5, 191, id(font_medium), Color(100, 255, 100),
+        (id(ups_battery).has_state() ? id(ups_battery).state + "%" : "--").c_str());
+
+      it.print(125, 175, id(font_tiny), Color(150, 150, 150), "Runtime");
+      it.print(125, 191, id(font_medium), Color(200, 200, 200),
+        (id(ups_runtime).has_state() ? id(ups_runtime).state + " min" : "--").c_str());
