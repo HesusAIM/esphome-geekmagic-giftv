@@ -12,12 +12,12 @@ To flash you'll need a UART to USB adapter
 
 Wiring:
 From top to bottom. On the left is HelloCubic, on the right UART adapter
-Square Pad   GND    -   GND 
-Second Pad   TXD0   -   RXD
-Third Pad    RXD0   -   TXD
-Fourth Pad   3V3    -   3V3
-Fifth Pad    GPIO0  -   Short to ground while plugging UART adapter to PC
-Sixth Pad    RST    -   NC
+Square Pad   GND    -   GND.
+Second Pad   TXD0   -   RXD.
+Third Pad    RXD0   -   TXD.
+Fourth Pad   3V3    -   3V3.
+Fifth Pad    GPIO0  -   Short to ground while plugging UART adapter to PC.
+Sixth Pad    RST    -   NC.
 
 Next open ESPHome dashboard, click "+ Create device" then "Advanced set up options" and choose "Import from file".
 Select hellocubiclite.yaml. Click "Install", then "Plug into this computer" and finally choose your device from the pop-up window
