@@ -27,4 +27,5 @@ Sixth Pad    RST    -   NC
 Next open ESPHome dashboard, click "+ Create device" then "Advanced set up options" and choose "Import from file".
 Select hellocubiclite.yaml. Click "Install", then "Plug into this computer" and finally choose your device from the pop-up window
 It should flash it and you should be able to see something on the screen.
-Of course it's up to you what you want to display. Enjoy
+
+Of course it's up to you what you want to display. Enjoy.
